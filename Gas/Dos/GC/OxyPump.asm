@@ -19,7 +19,7 @@ ifMul:
   jmp nextInstruction
   
 ifInt:
-  cmp ax, 0
+  
 
     
     
@@ -37,12 +37,7 @@ ifSetTo:
   jmp nextInstruction
   
   
-  
-  firstAsIdentity:
-    strcmp nullPointer, oxyValue
-      je IsZero
-  jne IsNotZero
-  IsZero:
+ 
     
   
   IsNotZero:

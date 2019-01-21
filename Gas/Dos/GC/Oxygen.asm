@@ -4,86 +4,82 @@
 ;into 2 byte command for
 ;the Gic
 
-%macro writeAsmOp 1
-  saveLocal
-  mov si, word oxSave[4]
-  %%weam:
-    getWord outBuffer+si, %1+si
+%macro addVar 3
+  mov cx, %3
+  push cx
+  mov di, word oxSave[2]
+  lea di, [variables+di]
+  lea si, [%1]
+  repz movsb
+  pop cx
+  mov si, word oxSave[2]
+  add si, cx
+  inc si
+  mov al, ' '
+  mov [variables+si], al
+  mov bx, %2
+  push bx
+  inc si
+  mov [variable+si], sp
+  mov bp, sp
+%endmacro
+
+%macro getVar 2
+  %%gtvr:
+    getByte Yw, variables+si, ' '
+    strcmp Yw, %2
+    je %%foundIt
     pop si
     pop di
-    mov ax, '\n'
-    cmp [%1+si], ax
-    jne %%weam
-    mov oxSave[4], si
-  loadLocal
+    lea di, [endVariables]
+    cmp si, [endVariables]
+  jne %%gtvr
+  %%foundIt:
+    pop si
+    pop di
+    clean di
+    getWord Zw, variables, ' '
+    mov ax, word [Zw]
+    dec ax
+    mov sp, ax
+    mov bp, sp
+  pop ax
+  mov %1, ax
 %endmacro
 
 
 Lexer:
-  saveLocal
-  
-  OY:
-    ;Load next Line
-    mov si, word oxSave[0]
-    getWord oxyReturner, buffer+si
+  mov si, word oxSave[0]
+  getByte oxyString, buffer+si, ';'
+  pop si
+  pop di
+  mov oxSave[0], si
+  clean di
+
+OY:
+  find Yw, oxyString, '('
+  je parenthesis
+  jne noParenthesis
+
+  parenthesis:
+    pop si
+    inc si
+    getByte Xw, oxyString, ')'
     pop si
     pop di
     clean di
-    getWord oxyOperand, buffer+si
-    pop si
-    pop di
-    clean di
-    getWord oxyValue, buffer+si
-    pop si
-    pop di
-    clean di
-    getWord oxyNext, buffer+si
-    pop si
-    pop di
-    mov oxSave[0], si
-    clean di
-    ;CHECK FOR INSTRUCTIOS
-    getWord Yw, oxyReturner
-    pop si
-    pop di
     clean si
-    clean di
-    clean ax
-    call OX
-    getWord Yw, oxyOperand
-    pop si
-    pop di
-    clean si
-    clean di
-    mov ax, 1
-    call OX
-    getWord Yw, oxyValue
-    pop si
-    pop di
-    clean si
-    clean di
-    mov ax, 2
-    call OX
-    getWord Yw, oxyNext
-    pop si
-    pop di
-    clean si
-    clean di
-    mov ax, 3
-    call OX
-    ret
+    jmp OY
+
+  noParenthesis:
     
+    
+    
+
+
     OX:
-      ;Compare the two words
-      strcmp Yw, setTo
-      je ifSetTo
-      strcmp Yw, Char
-      je ifChar
-      strcmp Yw, Integer
-      je ifInt
       
       
       
       nextInstruction:
-      ret
 %include 'OxyPump.asm'

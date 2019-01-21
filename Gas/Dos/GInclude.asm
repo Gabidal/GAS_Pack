@@ -10,8 +10,6 @@ tryCatch Include, jmp
   endStackManagment:
 %include 'GC\Oxygen.asm';token
   endOxygen:
-%include 'GC\Gic.asm';parser
-  endGic:
 %include 'Assets\Nimble.asm';errors
 %include 'Assets\Oxide.asm';variabled
 %include 'GC\OxyTree.asm'

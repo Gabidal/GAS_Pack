@@ -5,7 +5,7 @@ section .data
   db '$'
   fileName db 'main.g'
   outFile db 'main.asm'
-  handle dw 0
+  handle dw 0,0
   String Debug, ' G::Error'
   String Check, '  G::00'
   String numOut, '0000'
@@ -19,8 +19,9 @@ section .data
   piValue dt 3.141592653589793238462 ; pi
   splitbuffer db '1','1','1','1'
   savePoint times 6 dw 0
-  Yw times 32 db ' '
-  Xw times 32 db ' '
+  Yw times 255 db ';'
+  Xw times 255 db ';'
+  Zw times 16 db '0'
   savp dw 0 ;save point
   gsave dw 0
   hydSave times 16 db 0
@@ -29,10 +30,9 @@ section .data
   oxSave times 16 dw 0
   lexVar times 128 dw 0
   lexOp times 128 dw 0
-  oxyReturner times 32 db '0'
-  oxyOperand times 32 db '0'
-  oxyValue times 32 db '0'
-  oxyNext db ' '
+  oxyString times 256 db '0'
+  variables times 4096 dw '00'
+  endVariables db '0'
   seedVal dw 0
   nullPointer db 0
 ;THIS MUST INCLUDE LAST

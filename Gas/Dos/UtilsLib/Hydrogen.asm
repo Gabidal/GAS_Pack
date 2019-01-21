@@ -2,7 +2,23 @@
   %1 db %2, ' $'
 %endmacro
 
-%macro getWord 2
+%macro append 2
+  saveLocal
+  lea si, [%1]
+  inc si
+  mov al, %2
+  mov [si], al
+  loadLocal
+%endmacro
+
+%macro find 3
+  getByte %1, %2, %3
+  pop si
+  mov al, byte [si]
+  cmp al, %3
+%endmacro
+
+%macro getByte 3
  saveLocal
   lea si, [%2]
   lea di, [%1]
@@ -11,7 +27,7 @@
     mov [di], al
     inc si
     inc di
-    cmp al, ' '
+    cmp al, %3
     jne %%gtwdLoop
     push di
     push si
@@ -21,7 +37,7 @@
  ;next word in list
 %endmacro
 
-%macro getPreviusWord 2
+%macro getReverse 4
  saveLocal
   lea si, [%2]
   lea di, [%1]
@@ -30,8 +46,8 @@
     mov [di], al
     dec si
     dec di
-    cmp al, ' '
-    jne %%gtwdLoop
+    cmp al, %3
+    %4 %%gtwdLoop
     push di
     push si
  loadLocal
