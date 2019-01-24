@@ -154,115 +154,63 @@ jmp %%cost
   mov %1, ah
 %endmacro
 
-
-%macro lexString 1
-  lea si, %1[0]
-  mov hydSave[0], si
-  lea di, lexVar[0]
-  lea si, lexOp[0]
-  mov hydSave[1], si
-  ;CHECK FOR NUMBER 
-  ;OR FOR STRING
- %%lexLoop:
-  mov si, word hydSave[0]
-  mov al, byte [si]
-  cmp al, '$'
-  jne %%lexCon
-  jmp %%endLexing
-  %%lexCon:
-  inc si
-  mov hydSave[0], si
-  cmp al, '/' ; '/' == '-1'
-  jg %%secondCheck
-  jb %%itIsString
-  jmp %%lexLoop
-  
-  %%secondCheck:
-    cmp al, ':' ; ":"=="10"
-    jb %%itIsNumber
-    jmp %%itIsString
-    
-  %%itIsNumber:
-    XtoInt al, al
-    %%numSpace:
-    mov [di], al
-    inc di
-    jmp %%lexLoop
-  
-  %%itIsString:
-    cmp al, ' '
-    je %%numSpace
-    mov si, word hydSave[1]
-    mov [si], al
-    inc si
-    mov hydSave[1], si
-    jmp %%lexLoop
-
-  %%endLexing:
-%endmacro
-    
-%macro processString 2
-  ;(2 + 3 - 66)
-  lexString %2
-  lea si, lexVar[0]
-  lea di, lexOp[0] 
-  mov al, byte [si] ;num
-  inc si ;next byte
-  ;CHECK IF NUMBER IS MORE
-  ;THAN 9
-
-  %%processLoop:
+%macro realInt 2
   saveLocal
-  mov bl, byte [si] ;variables
-  cmp bl, '$'
-  je %%endProcess
-  inc si
-  cmp bl, ' '
-  jne %%checkIfNum
-  %%itIsOp:
-    mov bl, byte [di] ;opecodes
-    inc di
-    cmp bl, '+'
-    je %%isSum
-    cmp bl, '-'
-    je %%isSub
-    cmp bl, '*'
-    je %%isMul
-    cmp bl, '/'
-    je %%isDiv
-    
-  %%isSum:
-    add al, bl
-    jmp %%processLoop
-  %%isSub:
-    sub al, bl
-    jmp %%processLoop
-  %%isMul:
-    mul bl
-    jmp %%processLoop
-  %%isDiv:
-    div bl
-    jmp %%processLoop
-
-
-  %%checkIfNum:
-    cmp bl, 0
-    jge %%secondNumCheck
-    jne %%itIsOp
-
-  %%secondNumCheck:
-    cmp bl, 9
-    jbe %%itIs2Number
-    jne %%itIsOp
-
-  %%itIs2Number:
-    mov cl, 10
-    mul cl
-    add al, bl
-    jmp %%processLoop
-  
-  %%endProcess:
-  mov matSave[0], al
+  push ax
+  mov al, %2
+  cmp al, '0'
+  jne %%nextOne
+  xor al, al
+  jmp %%endReal
+  %%nextOne:
+    cmp al, '1'
+    jne %%nextTwo
+    mov al, 1
+    jmp %%endReal
+  %%nextTwo:
+    cmp al, '2'
+    jne %%nextTree
+    mov al, 2
+    jmp %%endReal
+  %%nextTree:
+    cmp al, '3'
+    jne %%nextFour
+    mov al, 3
+    jmp %%endReal
+  %%nextFour:
+    cmp al, '4'
+    jne %%nextFive
+    mov al, 4
+    jmp %%endReal
+  %%nextFive:
+    cmp al, '5'
+    jne %%nextSix
+    mov al, 5
+    jmp %%endReal
+  %%nextSix:
+    cmp al, '6'
+    jne %%nextSev
+    mov al, 6
+    jmp %%endReal
+  %%nextSev:
+    cmp al, '7'
+    jne %%nextEgt
+    mov al, 7
+    jmp %%endReal
+  %%nextEgt:
+    cmp al, '8'
+    jne %%nextNine
+    mov al, 8
+    jmp %%endReal
+  %%nextNine:
+    cmp al, '9'
+    jne %%endReal
+    mov al, 9
+  %%endReal:
+  clean ah
+  push ax
   loadLocal
-  mov %1, word matSave[0]
+  pop ax
+  mov %1, al
+  pop ax
 %endmacro

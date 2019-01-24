@@ -158,3 +158,43 @@ phycheckForVar:
   mov di, 0x10
   mov %1, %2 [ds:di+%3]
 %endmacro
+
+%macro addVar 2
+  ;ax = x
+  ;bx = y
+  ;dx:cx = value
+  
+  ;Change String name to X,Y cords
+  xToInt ah, byte [%1]
+  xToInt al, byte [%1+1]
+  xToInt bh, byte [%1+2]
+  xToInt bl, byte [%1+3]
+  ;Transfer parameter value to stack
+  mov ch, byte [%2]
+  mov cl, byte [%2+1]
+  realInt ch, ch
+  realInt cl, cl
+  ;Check if bigger than 99
+  mov dh, byte [%2+2]
+  cmp dh, '0'
+  jge %%bigger
+  jmp %%noInt
+  %%bigger:
+    cmp dh, '9'
+    jg %%noInt
+    mov dl, byte [%2+3]
+    realInt dl, dl
+    realInt dh, dh
+  %%noInt
+  
+  push cx ;lo
+  push dx ;hi
+  push bx
+  push ax
+  
+%endmacro
+
+%macro getVar 2
+  
+  
+%endmacro

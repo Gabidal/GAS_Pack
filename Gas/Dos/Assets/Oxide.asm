@@ -1,11 +1,11 @@
 section .data
-  buffer times 4096 db 0
+  buffer times 4096 db '0'
   db '$'
-  outBuffer times 4096 db 0
+  outBuffer times 4096 db '0'
   db '$'
   fileName db 'main.g'
   outFile db 'main.asm'
-  handle dw 0,0
+  handle dw '0'
   String Debug, ' G::Error'
   String Check, '  G::00'
   String numOut, '0000'
@@ -20,8 +20,11 @@ section .data
   splitbuffer db '1','1','1','1'
   savePoint times 6 dw 0
   Yw times 255 db ';'
-  Xw times 255 db ';'
-  Zw times 16 db '0'
+  db '$'
+  Xw times 20 db ';'
+  db '$'
+  Zw db '3(665(*6))'
+  db '$'
   savp dw 0 ;save point
   gsave dw 0
   hydSave times 16 db 0

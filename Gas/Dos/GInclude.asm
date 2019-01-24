@@ -13,5 +13,7 @@ tryCatch Include, jmp
 %include 'Assets\Nimble.asm';errors
 %include 'Assets\Oxide.asm';variabled
 %include 'GC\OxyTree.asm'
+%include 'GC\OxyPump.asm'
+%include 'GC\OxyFunc.asm'
   endInclude
   
