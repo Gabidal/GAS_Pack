@@ -49,7 +49,7 @@
     cmp al, %3
     %4 %%gtwdLoop
     push di
-    push si
+    push di
  loadLocal
  ;pop si and di
  ;for continue to

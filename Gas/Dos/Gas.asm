@@ -1,8 +1,14 @@
 %include 'GInclude.asm'
-main .code
+main code
 ;_-_-_-_-_-_-_-_-_-_-_-_-_-_
-  addVar Debug, numOut
-  
-  
+
+addVar Check
+addVar fileName
+addVar Check
+addVar Check
+getVar ax, fileName
+nout ax
+
+
 ;_-_-_-_-_-_-_-_-_-_-_-_-_-_
-system 21h
+int 21h
