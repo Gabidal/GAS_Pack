@@ -133,15 +133,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 0, 0, eax
 ;next
@@ -150,15 +150,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 1, 0, eax
 ;next
@@ -167,15 +167,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 2, 0, eax
 ;next
@@ -184,15 +184,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 0, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 3, 0, eax
 ;NEXT ROW
@@ -201,15 +201,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 0, 1, eax
 ;next
@@ -218,15 +218,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 1, 1, eax
 ;next
@@ -235,15 +235,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 2, 1, eax
 ;next
@@ -252,15 +252,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 1, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 3, 1, eax
 ;NEXT ROW
@@ -269,15 +269,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 0, 2, eax
 ;next
@@ -286,15 +286,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 1, 2, eax
 ;next
@@ -303,15 +303,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 2, 2, eax
 ;next
@@ -320,15 +320,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 2, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 3, 2, eax
 ;NEXT ROW
@@ -337,15 +337,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 0, 3, eax
 ;next
@@ -354,15 +354,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 1, 3, eax
 ;next
@@ -371,15 +371,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 2, 3, eax
 ;next
@@ -388,15 +388,15 @@
   Mmul eax, bx
   getFromMatrix %2, 1, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 2, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   getFromMatrix %2, 3, 3, ebx
   Mmul ecx, bx
-  Msum eax, ecx
+  sum eax, ecx
   clean ecx
   editMatrix %3, 3, 3, eax
 ;NEXT ROW

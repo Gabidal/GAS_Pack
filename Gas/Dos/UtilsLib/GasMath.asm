@@ -1,128 +1,75 @@
-%macro Msum 2
-  mov eax, %1
-  push eax
-  mov eax, %2
-  push eax ;load to stack all
-  
-  pop ax ;second tail
-  pop bx ;head
-  
-  pop cx ;first tail
-  pop dx ;head
-  
-  add dx, bx ;tail to tail
-  add cx, ax ;head to head
-  
-  push dx
-  push cx
-  
-  pop eax
-  mov %1, eax
-%endmacro
-
-%macro Msub 2
-  mov eax, %1
-  push eax
-  mov eax, %2
-  push eax ;load to stack all
-  
-  pop ax ;second tail
-  pop bx ;head
-  pop cx ;first tail
-  pop dx ;head
-  
-  sub dx, bx ;tail to tail
-  sub cx, ax ;head to head
-  push dx
-  push cx
-  
-  pop eax
-  mov %1, eax
-%endmacro
-
-%macro Xsum 2
-  mov ax, %1
-  mov bx, %2
-  add ax, bx
-  mov %1, ax
-%endmacro
-
-%macro Xsub 2
-  mov ax, %1
-  mov bx, %2
-  sub ax, bx
-  mov %1, ax
-%endmacro
 
 %macro Mmul 2
-  push eax
-  push ebx
-  push ecx
-  push edx
-  clean edx
-  mov cx, %2
+  saveLocal
+  clearLocal
   mov eax, %1
-  shl eax, cl
-  mov ebx, ecx
-  div ebx
-  pop edx
-  pop ecx
-  pop ebx
-  mov %1, eax
-  pop eax
+  mov ebx, %2
+  imul ebx
+  push eax
+  loadLocal
+  pop %1
 %endmacro
 
 %macro Mdiv 2
-  clean edx
-  mov cx, %2
+  saveLocal
+  clearLocal
   mov eax, %1
-  shr eax, cl
-  mov ebx, ecx
-  mul ebx
-  mov %1, eax
+  mov ebx, %2
+  cwd
+  idiv ebx
+  push eax
+  loadLocal
+  pop %1
 %endmacro
 
 %macro Xdiv 2
-  clean edx
+  saveLocal
+  clearLocal
   mov ax, %1
   mov bx, %2
-  
-  div bx
-  
-  mov %1, dx ;hi-
-  mov %1, ax ;lo-
+  cwd
+  idiv bx
+  push ax
+  loadLocal
+  pop %1
 %endmacro
 
 %macro Xmul 2
-  clean edx
+  saveLocal
+  clearLocal
   mov ax, %1
   mov bx, %2
-
-  mul bx
-
-  mov %1, dx ;hi-
-  mov %1, ax ;lo-
+  imul bx
+  push ax
+  loadLocal
+  pop %1
 %endmacro
 
-%macro pot 3
-  clean edx
-  mov cx, %2
-  mov ebx, %1
-  %3pot:
-    mul ebx
-    add %1, eax
-  dec cx
-  cmp cx, 0
-  jg %3pot
+%macro pot 2
+  saveLocal
+  clearLocal
+  mov ecx, %2
+  %%ll:
+    imul %1, %1
+    dec ecx
+  cmp ecx, 0
+    jne %%ll
+  push %1
+  loadLocal
+  pop %1
 %endmacro
  
 %macro negate 1
+  saveLocal
   mov ebx, 0
-  Msub ebx, %1
-  mov %1, ebx
+  sub ebx, %1
+  push ebx
+  loadLocal
+  pop %1
 %endmacro
 
 %macro abs 1
+  saveLocal
   mov ecx, %1
   cmp ecx, 0
   jb negative
@@ -131,22 +78,32 @@
   negative:
     Mmul ecx, -1
   saveResult:
-    mov %1, ecx
+  push ecx
+  loadLocal
+  pop %1
 %endmacro
 
 %macro Xpot 3
+  saveLocal
+  clearLocal
   mov cx, %2
-  %3xpot:
-    Xmul %1, %1
-  dec cx
+  %%ll:
+    imul %1, %1
+    dec cx
   cmp cx, 0
-  jne %3xpot
+    jne %%ll
+  push %1
+  loadLocal
+  pop %1
 %endmacro
  
 %macro Xnegate 1
+  saveLocal
   mov bx, 0
-  Xsub bx, %1
-  mov %1, bx
+  sub bx, %1
+  push bx
+  loadLocal
+  pop %1
 %endmacro
 
 %macro sin 3
@@ -158,7 +115,7 @@
   Mmul ebx, ax ;potense 3
   mov ecx, 6 ;3!
   Mdiv ebx, cx
-  Msub eax, ebx
+  sub eax, ebx
 ; + (X^5/5!)
   mov ebx, %1
   Mmul ebx, ax
@@ -168,7 +125,7 @@
   Mmul ebx, ax ;potense 5
   mov ecx, 120 ; 5!
   Mdiv ebx, cx
-  Msum eax, ebx
+  sum eax, ebx
 ; - (X^7/7!)
   mov ebx, %1
   Mmul ebx, ax
@@ -180,7 +137,7 @@
   Mmul ebx, ax ;potense 7
   mov ecx, 5040 ; 7!
   Mdiv ebx, cx
-  Msub eax, ebx
+  sub eax, ebx
 ; +(X^9/9!)
   mov ebx, %1
   Mmul ebx, ax
@@ -194,7 +151,7 @@
   Mmul ebx, ax ;potense 9
   mov ecx, 362880
   Mdiv ebx, cx
-  Msum eax, ebx
+  sum eax, ebx
 ; -(X^11/11!)
   mov ebx, %1
   Mmul ebx, ax
@@ -210,8 +167,10 @@
   Mmul ebx, ax ;potense 11
   mov ecx, 39916800
   Mdiv ebx, cx
-  Msub eax, ebx
-  mov %2, eax
+  sub eax, ebx
+  push eax
+  loadLocal
+  pop %2
 %endmacro
 
 %macro cos 3
@@ -233,48 +192,6 @@
   mov %2, ebx
 %endmacro
 
-
-%macro Xsin 3
-  ;X - (X^3/3!)
-  mov ax, %1 ; X
-  mov bx, ax
-  Xpot bx, 3, %3firstpot
-  mov cx, 6 ;3!
-  Xdiv bx, cx
-  Xsub ax, bx
-; + (X^5/5!)
-  mov bx, %1
-  Xpot bx, 5, %3secondpot
-  mov cx, 120 ; 5!
-  Xdiv bx, cx
-  Xsum ax, bx
-; - (X^7/7!)
-  mov bx, %1
-  Xpot bx, 7, %3tirdpot
-  mov cx, 5040 ; 7!
-  Xdiv bx, cx
-  Xsub ax, bx
-  mov %2, ax
-%endmacro
-
-%macro Xcos 3
-  ;Xcos (x) = Xsin (pi/2)-x
-  lea si, piValue[0]
-  mov ax, word [si]
-  Xdiv ax, 2 ;pi/2
-  Xsin ax, ax, %3 ;ax=sin(ax)
-  Xsub ax, %1; -x
-  mov %2, ax
-%endmacro
-
-%macro Xtan 3
-  ;Xtan(x) = Xsin(x) / cos(x)
-  Xsin %1, ax, %3
-  Xcos %1, cx, %3%3
-  Xdiv ax, cx
-  mov %2, ax
-%endmacro
-
 %macro rand 1
   saveLocal
   mov ah, 00h    ;timer in CX:DX 
@@ -283,7 +200,9 @@
   mov ax, 25173  ; LCG Multiplier
   mul bx
   add ax, 13849
-  mov %1, ax
+  push ax
+  loadLocal
+  pop %1
 %endmacro
 
 %macro vec 4
@@ -297,6 +216,7 @@
 %endmacro
 
 %macro addVec 3
+  saveLocal
   vec %1
   mov ax, word [%2X]
   mov bx, word [%2Y]
@@ -309,9 +229,11 @@
   mov [%1X], ax
   mov [%1Y], bx
   mov [%1Z], cx
+  loadLocal
 %endmacro
 
 %macro sqrt 2
+  saveLocal
   mov eax, %2
   test eax, eax
   jnz %%sqrtpos
@@ -335,4 +257,5 @@
   clearLocal
   mov eax, dword matSave[0]
   mov %1, eax
+  loadLocal
 %endmacro

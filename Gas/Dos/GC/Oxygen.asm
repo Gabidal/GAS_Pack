@@ -5,9 +5,7 @@ Lexer:
   mov si, word oxSave[0]
   getByte oxyString, buffer+si, ';'
   pop si
-  pop di
   mov oxSave[0], si
-  clean di
   find Yw, oxyString, '('
   jne noParenthesis
   ;GET PARENTHESIS
@@ -21,8 +19,6 @@ Lexer:
     inc si
     getByte Xw, oxyString+si, ')'
     pop si
-    pop di
-    clean di
     clean si
     fbgLop:
     find Yw, Xw, '('
@@ -31,8 +27,6 @@ Lexer:
     inc si
     getByte Xw, Xw+si, ')'
     pop si
-    pop di
-    clean di 
     jmp fbgLop
   nonoParentheis:
   

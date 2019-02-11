@@ -24,7 +24,7 @@
     saveLocal
     mov ah,3fh
     mov bx,[handle]
-    mov cx, 4096
+    mov cx, 8192
     lea dx,[%1]
     int 21h
     jc Error
@@ -50,7 +50,7 @@
     saveLocal
     mov ah,40h
     mov bx,[handle]
-    mov cx, 4096
+    mov cx, 8192
     lea dx,[%1]
     int 21h
     jc Error

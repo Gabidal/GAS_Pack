@@ -8,7 +8,7 @@ addVar Check
 addVar Check
 getVar ax, fileName
 nout ax
-
+mov bp, sp
 
 ;_-_-_-_-_-_-_-_-_-_-_-_-_-_
 int 21h

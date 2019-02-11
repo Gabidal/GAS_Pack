@@ -12,10 +12,13 @@
 %endmacro
 
 %macro find 3
+  saveLocal
   getByte %1, %2, %3
   pop si
+  push si
   mov al, byte [si]
   cmp al, %3
+  loadLocal
 %endmacro
 
 %macro getByte 3
@@ -29,7 +32,6 @@
     inc di
     cmp al, %3
     jne %%gtwdLoop
-    push di
     push si
  loadLocal
  ;pop si and di
@@ -48,7 +50,6 @@
     dec di
     cmp al, %3
     %4 %%gtwdLoop
-    push di
     push di
  loadLocal
  ;pop si and di
@@ -84,31 +85,34 @@ jmp %%cost
 %endMacro
 
 %macro copyString 2
+  saveLocal
   lea si, %2[0]
   lea di, %1[0]
   %%costr:
-    mov al, byte %2[si]
+    mov al, byte [si]
     inc si
   cmp al, 0
     je %%endcostr
-    mov %1[di], al
+    mov [di], al
     inc di
-    mov bl, byte %1[di]
+    mov bl, byte [di]
   cmp bl, 0
     je %%endcostr
     jmp %%costr
   %%endcostr:
+  loadLocal
 %endmacro
 
 %macro getLenght 2
   saveLocal
   lea si, [%2]
+  clean cx
   %%glgcloop:
   mov al, byte [si]
+  inc cx
   inc si
   cmp al , ' '
   jne %%glgcloop
-  mov cx, si
   dec cx
   push cx
   loadLocal
@@ -118,29 +122,23 @@ jmp %%cost
 %macro toChar 2
   saveLocal
   mov ax, %2
-  split ax, ch, dh
-  mov bh, 48
-  add ch, bh
-  add dh, bh
-  mov [hydSave], ch
-  mov [hydSave+2], dh
-  clearLocal
-  mov ax, word [hydSave]
-  mov %1, ax
+  mov bl, 48
+  add ah, bl
+  add al, bl
+  push ax
+  loadLocal
+  pop %1
 %endmacro
 
 %macro toInt 2
   saveLocal
   mov ax, %2
-  split ax, ch, dh
-  mov bh, 48
-  sub ch, bh
-  sub dh, bh
-  mov [hydSave], ch
-  mov [hydSave+2], dh
-  clearLocal
-  mov ax, word [hydSave]
-  mov %1, ax
+  mov bl, 48
+  sub ah, bl
+  sub al, bl
+  push ax
+  loadLocal
+  pop %1
 %endmacro
 
 %macro XtoInt 2
@@ -148,15 +146,14 @@ jmp %%cost
   mov al, %2
   mov bl, 48
   sub al, bl
-  mov [hydSave], al
+  push ax
   loadLocal
-  mov ah, byte [hydSave]
-  mov %1, ah
+  pop ax
+  mov %1, al
 %endmacro
 
 %macro realInt 2
   saveLocal
-  push ax
   mov al, %2
   cmp al, '0'
   jne %%nextOne
@@ -212,5 +209,4 @@ jmp %%cost
   loadLocal
   pop ax
   mov %1, al
-  pop ax
 %endmacro

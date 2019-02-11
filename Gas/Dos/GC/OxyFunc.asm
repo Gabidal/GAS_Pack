@@ -9,8 +9,6 @@
     inc si
     getByte Xw, %1+si, %3
     pop si
-    pop di
-    clean di
     clean si
     %%fbgLop:
     find Yw, Xw, %2
@@ -19,8 +17,6 @@
     inc si
     getByte Xw, Xw+si, %3
     pop si
-    pop di
-    clean di 
     jmp %%fbgLop
   %%nonoParentheis:
 %endmacro
@@ -87,6 +83,8 @@
   inc si
   cmp si, 30
   jb %%adloop
+  mov ax, ' '
+  push ax
   %%adend:
   
   loadLocal
@@ -97,9 +95,12 @@
   clearLocal
   mov bp, sp
   clean si
-  clean cx
   
   %%adst:
+  dec bp ;skip ' '
+  dec bp ;skip 16 var
+  dec bp ;skip 16 var
+  %%adss:
   mov ax, [bp]
   cmp ah, ' '
   je %%fista
@@ -107,9 +108,8 @@
   je %%fista
   mov variables[si], word ax
   inc si
-  inc bp
-  inc cx
-  jmp %%adst
+  dec bp
+  jmp %%adss
 
   %%fista:
   lea si, variables[0]
@@ -130,7 +130,6 @@
   pop si
   add si, di
   getReverse Yw, si, ' ', je
-  pop di
   ;pop index to get
   ;position of
   ;previous statement
@@ -143,8 +142,6 @@
   pop si
   add si, di
   getByte Yw, si, ' '
-  pop di
-  pop di
   ;pop index to get
   ;position of
   ;next statement

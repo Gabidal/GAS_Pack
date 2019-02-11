@@ -14,12 +14,11 @@ start:
   mov dx, %1
   mov ah,9
   int 21h
-  clean dx
-  clean ah
 %endmacro
 
 %macro nout 1
-  toChar numOut[0], %1
+  toChar %1, %1
+  mov [numOut], %1
   sout numOut
 %endmacro
 
@@ -35,45 +34,20 @@ start:
   mov %3, byte [si+1] ;lo-
 %endmacro
 
-%macro storeMap 1
-  mov [100*%1], ax
-  mov [132*%1], bx
-  mov [164*%1], cx
-  mov [196*%1], dx
-%endmacro
-
-%macro loadMap 1
-  mov ax, [100*%1]
-  mov bx, [132*%1]
-  mov cx, [164*%1]
-  mov dx, [196*%1]
-%endmacro
-
-%macro ByteMem 2
-  ;these are in bytes
-  %1reservedB times %2 db '0'
-%endmacro
-
-%macro KiloMem 2
-  ;these are kilo bytes
-  %1reservedKB times %2*1000 db '0'
-%endmacro
-
-
 %macro shiftLeft 0
-  mov [40h], eax
+  mov [savp], eax
   mov eax, [edx]
   mov edx, ebx
   mov ebx, ecx
-  mov ecx, [40h]
+  mov ecx, dword [savp]
 %endmacro
 
 %macro shiftRight 0
-  mov [70h], ecx
+  mov [savp], ecx
   mov ecx, ebx
   mov ebx, edx
   mov edx, eax
-  mov eax, [70h]
+  mov eax, dword [savp]
 %endmacro
 
 %macro saveLocal 0

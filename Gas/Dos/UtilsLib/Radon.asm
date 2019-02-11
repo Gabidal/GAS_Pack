@@ -22,21 +22,21 @@
 %endmacro
 
 %macro getFromStack 2
-  mov sp, %2
-  mov %1, [ss:sp]
+  sub bp, %2
+  mov %1, [bp]
 %endmacro
 
-%macro getMaxOf 3
+%macro getMaxOf 2
   saveLocal
-  mov bx, %3
-  mov ax, %3
-  %1:
+  mov bx, %2
+  mov ax, %2
+  %%aba:
     dec ax
     cmp ax, bx
-    jb %1
-mov [radSave], ax
+    jb %%aba
+  push ax
   loadLocal
-  mov %2, word [radSave]
+  pop %1
 %endmacro
 
 %macro sizeOffMem 1
