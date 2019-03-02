@@ -1,7 +1,4 @@
 section .data
-  fileName db 'main.g$'
-  outFile db 'main.asm$'
-  handle dw '0$'
   Debug db ' G::Error', '$'
   Check db  '  G::00', '$'
   String numOut, '00$'
@@ -36,7 +33,6 @@ section .data
   Array ground, 600
   Array center, 400
   Array freeX, 200
-  Array buffer, 8192
   Array outBuffer, 8192
   Array errorS, 64
 ;THIS MUST INCLUDE LAST

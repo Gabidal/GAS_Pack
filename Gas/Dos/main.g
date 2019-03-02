@@ -1,6 +1,12 @@
+void banana()
+{
+  vec a = 1.0, 2.0, 3.0;
+  vec b = 3.0, 2.0, 1.0;
+  vec c = a + b;
+}
+
 int main()
 {
-char c = '$';
-char abc[123];
-abc[3] = c;
+  banana();
+  return ?;
 }
