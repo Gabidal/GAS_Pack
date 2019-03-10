@@ -1,0 +1,1 @@
+%include 'GINF\GI.asm'

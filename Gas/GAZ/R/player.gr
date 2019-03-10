@@ -1,0 +1,26 @@
+dw 0 ;for filling false
+dw 3 ;how many vector lines this file gives us
+dw 50 ;start X
+dw 20 ;stary Y
+dw 100 ;end X
+dw 30 ;end Y
+db 0001b
+db 0001b
+db 0001b
+db 0001b
+dw 100 ;start X
+dw 30 ;start Y
+dw 10; end X
+dw 100; end Y
+db 0011b
+db 0011b
+db 0011b
+db 0011b
+dw 10 ;start X
+dw 100 ;start Y
+dw 50; end X
+dw 20; end Y
+db 0111b
+db 0111b
+db 0111b
+db 0111b
