@@ -3,16 +3,16 @@ Lexer:
   pop cx                             ;cx == line it is in.
   mov [lineOffset], cx               ;save line offset
   getByte paranthesis, line, ")"     ;the end paranthesis tells us where is the most inside start paranthesis.
-  pop bx                             ;bx == what paranthesis is it.
-  mov [paranthesisAmount], bx        ;save paranthesis amount
+  pop si                             ;bx == what paranthesis is it.
+  mov [paranthesisAmount], si        ;save paranthesis amount
   
-  getReverse secondParanthesis, paranthsis, "(", jne
+  getReverse secondParanthesis, paranthsis+si, "(", jne
   pop bx
   
   getByte mathL, secondParanthesis, "*"
+  pop di
+  
+  getReverse mathR, secondParanthesis+di, "*"
   pop bx
   
-  getReverse mathR, secondParanthesis, "*"
-  pop bx
-  
-  call mathParser
+  call mulMathParser
